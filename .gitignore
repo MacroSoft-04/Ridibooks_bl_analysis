@@ -3,9 +3,8 @@ __pycache__/
 .env
 venv/
 .venv/
-.DS_Store
 .vscode/
-
+.DS_Store
 
 
 
