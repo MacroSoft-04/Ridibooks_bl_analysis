@@ -1,10 +1,16 @@
 import pandas as pd
+from pathlib import Path
 
-df = pd.read_csv('ridi_m_dataset.csv')
+SRC_DIR = Path(__file__).resolve().parents[1]
+BASE_DIR = SRC_DIR.parent
+PROJECT_ROOT = SRC_DIR
+DATA_DIR = PROJECT_ROOT / "data"
+
+df = pd.read_csv(DATA_DIR / "ridi_m_dataset.csv")
 total_count = len(df)
 
-is_ongoing = df['keywords'].str.contains('연재중', na = False)
-is_completed = df['keywords'].str.contains('연재완결', na = False)
+is_ongoing = df["keywords"].str.contains("연재중", na=False)
+is_completed = df["keywords"].str.contains("연재완결", na=False)
 
 count_ongoing = is_ongoing.sum()
 count_completed = is_completed.sum()
@@ -20,12 +26,12 @@ print(f"3. '연재완결' 키워드 포함: {count_completed}개")
 print(f"-----------------------")
 print(f"검증 합계(연재중 + 연재 완결): {count_ongoing + count_completed}개")
 
-if(count_ongoing + count_completed) == total_count:
-    print(F"결과 : 누락된 데이터가 없습니다.")
+if (count_ongoing + count_completed) == total_count:
+    print(f"결과 : 누락된 데이터가 없습니다.")
 else:
     diff = total_count - (count_ongoing + count_completed)
     print(f"결과 : {diff}개의 작품이 분류되지 않았습니다")
 
     if count_others > 0:
         print("\n[분류 안 된 작품들(Others) 확인]")
-        print(others_df[['title', 'keywords']].head(10))
+        print(others_df[["title", "keywords"]].head(10))
